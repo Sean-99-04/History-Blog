@@ -1,0 +1,11 @@
+<a href="/">Landing Page</a>
+<br>
+{{!-- <a href="/logout">Logout</a> --}}
+<form action="/logout" method="POST">
+    <input type="submit" value="Logout">
+</form>
+
+{{#if user}}
+    <p class="m-2">Name: {{user.name}}</p>
+    <p class="m-2">Email: {{user.email}}</p>
+{{/if}}

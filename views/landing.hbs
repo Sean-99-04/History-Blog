@@ -1,0 +1,11 @@
+{{#unless logged}}
+    {{> _loginBtn}}
+{{/unless}}
+{{#if logged}}
+    <a href="/dashboard">Dashboard</a>
+    <br>
+    {{!-- <a href="/logout">Logout</a> --}}
+    <form action="/logout" method="POST">
+        <input type="submit" value="Logout">
+    </form>
+{{/if}}

@@ -3,31 +3,39 @@ if ((process.env.NODE_ENV = "development")) {
 }
 const express = require("express");
 const router = express.Router();
-const session = require("express-session");
-const mongoose = require("mongoose");
 const Users = require("./../models/model");
 
 router.use((req, res, next) => {
   res.locals.session = req.session;
+  //   console.log(`res.locals - ${JSON.stringify(res.locals)}`);
   next();
 });
 
-router.get("/", (req, res) => {
-  res.send(`
-      <a href='/login'>To Login Page</a><br>
-      <a href='/register'>To Register Page</a>
-    `);
-});
+const redirectUnloggedUser = (req, res, next) => {
+  if (!req.session.userId) {
+    console.log("You are not logged in");
+    return res.redirect("/");
+  } else if (req.session.userId) {
+    console.log(
+      `Logged in with user ID as: ${JSON.stringify(req.session.userId)}`
+    );
+  }
+  next();
+};
 
-router.get("/register", (req, res) => {
-  res.send(`
-      <form action='/register' method='POST'>
-        <input name='name' value='alex'/>
-        <input name='email' value='a@a'/>
-        <input name='password' value='a'/>
-        <input type='submit' value='Register'/>
-      </form>
-    `);
+router.get("/", (req, res) => {
+  let logged;
+  if (!req.session.userId) {
+    // console.log("NOT logged in");
+    logged = false;
+    return res.render("landing", { logged });
+  } else if (req.session.userId) {
+    // console.log(
+    //   `Logged in with user ID as: ${JSON.stringify(req.session.userId)}`
+    // );
+    logged = true;
+    return res.render("landing", { logged });
+  }
 });
 
 router.post("/register", (req, res) => {
@@ -54,19 +62,6 @@ router.post("/register", (req, res) => {
     });
 });
 
-router.get("/login", (req, res) => {
-  console.log(`get.("/login") - ${req.session.userId}`);
-  res.send(
-    `
-          <form action='/login' method='POST'>
-              <input name='email' value='s@s'/>
-              <input name='password' value='s'/>
-              <input type='submit' value='Login'/>
-          </form>
-      `
-  );
-});
-
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   Users.findOne({ email, password })
@@ -75,11 +70,6 @@ router.post("/login", (req, res) => {
       //   console.log(user);
       console.log(`.post("/login") - ${user._id}\n`);
       req.session.userId = user._id;
-      //   res.send(
-      //     `Name: ${JSON.stringify(user.name)}\nEmail: ${JSON.stringify(
-      //       user.email
-      //     )}`
-      //   );
       req.session.save(res.redirect("/dashboard"));
     })
     .catch((err) => {
@@ -88,26 +78,40 @@ router.post("/login", (req, res) => {
     });
 });
 
-router.get("/logout", (req, res) => {
+router.post("/logout", (req, res) => {
   console.log(`get.("/logout") - ${req.session.userId}`);
   req.session.destroy();
   return res.redirect("/");
 });
 
-router.get("/dashboard", (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).send("No user ID");
-  }
-  console.log(
-    `Dashboard now - ${req.session.userId}\nSession - ${JSON.stringify(
-      req.session
-    )}`
-  );
-  return res.send(`
-    Congratulations! You are logged in.
-      <a href="/logout">Logout</a>
+router.get("/dashboard", redirectUnloggedUser, (req, res) => {
+  const userId = req.session.userId;
+  if (!userId) {
+    return res.send(`
+        <h2>Error: error at get.("/dashboard")<h2>
+        <br>
+        <p>Could not find userId specified in req.session.userId</p>
     `);
-  // return res.status(200).send("Welcome to the super-secret API");
+  } else if (userId) {
+    console.log(userId);
+    Users.findOne({ _id: userId })
+      .exec()
+      .then((user) => {
+        const newUser = {
+          name: user.name,
+          email: user.email,
+        };
+        return res.render("dashboard", { user: newUser });
+      })
+      .catch((err) => console.log(err));
+  }
+});
+
+router.get("/*", (req, res) => {
+  res.send(`
+        <h2>404 Page does not exist</h2>
+        <a href="/">Return Home</a>
+    `);
 });
 
 module.exports = router;

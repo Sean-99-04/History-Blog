@@ -1,0 +1,33 @@
+.my-form {
+  max-width: 80%;
+  border-radius: 15px;
+  background-color: #fff;
+}
+
+.my-form__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  opacity: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.my-form__open {
+  pointer-events: all;
+  opacity: 1;
+}
+/*# sourceMappingURL=style.css.map */
