@@ -3,11 +3,13 @@ if ((process.env.NODE_ENV = "development")) {
 }
 const express = require("express");
 const router = express.Router();
-const Users = require("./../models/model");
+const Users = require("./../models/users");
+const Article = require("./../models/article");
+const formatDate = require("./../api/dateFormatting");
 
+// LOGGING IN
 router.use((req, res, next) => {
   res.locals.session = req.session;
-  //   console.log(`res.locals - ${JSON.stringify(res.locals)}`);
   next();
 });
 
@@ -24,18 +26,37 @@ const redirectUnloggedUser = (req, res, next) => {
 };
 
 router.get("/", (req, res) => {
-  let logged;
-  if (!req.session.userId) {
-    // console.log("NOT logged in");
-    logged = false;
-    return res.render("landing", { logged });
-  } else if (req.session.userId) {
-    // console.log(
-    //   `Logged in with user ID as: ${JSON.stringify(req.session.userId)}`
-    // );
-    logged = true;
-    return res.render("landing", { logged });
-  }
+  Article.find({})
+    .exec()
+    .then((oldArticleObj) => {
+      const newArticleObj = {
+        articles: oldArticleObj.map((data) => {
+          return {
+            author: data.author,
+            title: data.title,
+            content: data.content,
+            sources: data.sources,
+            tags: data.tags,
+            createdAt: formatDate(data.createdAt),
+          };
+        }),
+      };
+      let logged;
+      if (!req.session.userId) {
+        logged = false;
+        // return res.render("landing", { logged, pageTitle: "Landing" });
+      } else if (req.session.userId) {
+        logged = true;
+        // return res.render("landing", { logged, pageTitle: "Landing" });
+      }
+      console.log(logged);
+      return res.render("landing", {
+        logged,
+        pageTitle: "Landing",
+        articles: newArticleObj.articles,
+      });
+    })
+    .catch((err) => console.log(err));
 });
 
 router.post("/register", (req, res) => {
@@ -67,10 +88,9 @@ router.post("/login", (req, res) => {
   Users.findOne({ email, password })
     .exec()
     .then((user) => {
-      //   console.log(user);
       console.log(`.post("/login") - ${user._id}\n`);
       req.session.userId = user._id;
-      req.session.save(res.redirect("/dashboard"));
+      req.session.save(res.redirect("/"));
     })
     .catch((err) => {
       console.log(err);
@@ -106,7 +126,38 @@ router.get("/dashboard", redirectUnloggedUser, (req, res) => {
       .catch((err) => console.log(err));
   }
 });
+// END OF LOGGING IN //
 
+// ARTICLES
+router.post("/addArticle", (req, res) => {
+  const { author, title, content, sources, tags } = req.body;
+  const article = new Article({
+    author,
+    title,
+    content,
+    sources,
+    tags,
+  });
+  article
+    .save()
+    .then((savedArticle) => {
+      console.log(savedArticle);
+    })
+    .catch((err) => console.log(err));
+  return res.redirect("/");
+});
+
+router.patch("/editArticle", (req, res) => {
+  return res.redirect("/");
+});
+
+router.delete("/deleteArticle", (req, res) => {
+  return res.redirect("/");
+});
+
+// END OF ARTICLES //
+
+// ANYTHING ELSE //
 router.get("/*", (req, res) => {
   res.send(`
         <h2>404 Page does not exist</h2>

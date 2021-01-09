@@ -1,0 +1,17 @@
+@mixin basic-flex($display: flex, $align: center, $justify: center) {
+  display: $display;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin full-screen-img($url) {
+  background-image: $url;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@mixin roman-border($style: solid, $width: 0.1em, $color: $text-color) {
+  border-style: $style;
+  border-width: $width;
+  border-color: $color;
+}

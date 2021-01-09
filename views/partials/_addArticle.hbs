@@ -1,0 +1,33 @@
+<div class="form__container" id="addArtFormCont">
+    <form action="/addArticle" method="POST" class="form" id="addArtForm">
+
+        <div class="form__group">
+            <label for="addAuthor" class="form__label">Author: </label>
+            <input type="text" name="author" id="addAuthor" class="form__input" value="Ivan Ceasar">
+        </div>
+
+        <div class="form__group">
+            <label for="addTitle" class="form__label">Title: </label>
+            <input type="text" name="title" id="addTitle" class="form__input" value="The Roman Empire">
+        </div>
+
+        <div class="form__group">
+            <label for="addContent" class="form__label form__label--align-top">Content: </label>
+            <textarea name="content" cols="30" rows="5" id="addContent" class="form__input">Lorem ipsum dolor sit amet consectetur adipisicing elit. A, cupiditate. Debitis nesciunt autem quae modi, dignissimos amet quam mollitia pariatur commodi et nam non magni, assumenda odio. Ab minus recusandae accusamus! Eum dicta at doloremque. Incidunt corrupti ipsa doloribus quia ea perspiciatis, vel illo pariatur possimus sapiente eos laborum quae consectetur enim laudantium repellendus delectus aliquam iure. Porro, quod nihil!</textarea>
+        </div>
+
+        <div class="form__group">
+            <label for="addSources" class="form__label">Sources: </label>
+            <input type="text" name="sources" id="addSources" class="form__input" value="a book I read">
+        </div>
+
+        <div class="form__group">
+            <label for="addTags" class="form__label">Tags: </label>
+            <input type="text" name="tags" id="addTags" class="form__input" value="romans, history, .etc">
+        </div>
+
+        <div class="form__group form__group--justify-center">
+            <input type="submit" value="Submit" class="form__btn">
+        </div>
+    </form>
+</div>

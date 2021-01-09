@@ -1,0 +1,17 @@
+<button id="btnLogin" class="btn btn-secondary m-1">Login</button>
+
+<div class="form__container" id="formLoginCont">
+    <form action="/login" method="POST" class="form form--login" id="formLogin">
+        <div class="form__group form__group--login">
+            <label for="emailLogin" class="form__label">Email: </label>
+            <input type="text" id="emailLogin" name="email" placeholder="email" required="true" class="form__input form__input--login"  value="s@s"/>
+        </div>
+        <div class="form__group form__group--login">
+            <label for="passwordLogin" class="form__label">Password: </label>
+            <input type="password" id="passwordLogin" name="password" placeholder="password" required="true" class="form__input form__input--login"  value="s"/>
+        </div>
+        <div class="form__group form__group--justify-center">
+            <input type="submit" value="Login" class="form__btn">
+        </div>
+    </form>
+</div>
