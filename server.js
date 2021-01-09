@@ -8,10 +8,10 @@ const routes = require("./routes/routes");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
-const Users = require("./models/model");
 
 const { PORT, MONGODB_USER, MONGODB_PASS, MONGODB_DB } = process.env;
 
+// MONGODB
 const URI = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@cluster0.xuroh.mongodb.net/${MONGODB_DB}?retryWrites=true&w=majority`;
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
