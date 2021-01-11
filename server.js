@@ -53,6 +53,6 @@ app.use(express.static("public"));
 app.use(methodOverride("_method"));
 app.use("/", routes);
 
-app.listen(PORT, () => {
-  console.log(`listening at http://localhost:${PORT}`);
+app.listen(process.env.PORT || PORT, () => {
+  console.log("listening at http://localhost:3000");
 });
