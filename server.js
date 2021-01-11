@@ -8,12 +8,17 @@ const routes = require("./routes/routes");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 
 const { PORT, MONGODB_USER, MONGODB_PASS, MONGODB_DB } = process.env;
 
 // MONGODB
 const URI = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@cluster0.xuroh.mongodb.net/${MONGODB_DB}?retryWrites=true&w=majority`;
-mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
 const db = mongoose.connection;
 db.once("open", () => console.log("connected to the database"));
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
@@ -45,6 +50,7 @@ app.use(
   })
 );
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 app.use("/", routes);
 
 app.listen(PORT, () => {

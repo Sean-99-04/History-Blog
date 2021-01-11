@@ -1,5 +1,3 @@
-const restOfBody = document.getElementById("restOfBody");
-
 const btnLogin = document.getElementById("btnLogin");
 const formLogin = document.getElementById("formLogin");
 const formLoginCont = document.getElementById("formLoginCont");
@@ -7,6 +5,7 @@ const formLoginCont = document.getElementById("formLoginCont");
 const sidebar = document.querySelector(".sidebar");
 const header = document.querySelector(".header");
 
+// LOGIN //
 if (btnLogin) {
   btnLogin.addEventListener("click", (e) => {
     formLoginCont.classList.add("form__open");
@@ -21,7 +20,8 @@ if (formLoginCont) {
     }
   });
 }
-
+// END OF 'LOGIN' //
+// ADD ARTICLE //
 const btnAddArt = document.getElementById("addArticle");
 const addArtForm = document.getElementById("addArtForm");
 const addArtFormCont = document.getElementById("addArtFormCont");
@@ -43,8 +43,21 @@ if (addArtFormCont) {
     }
   });
 }
+// END OF 'ADD ARTICLE' //
 
-const body = document.querySelector("body");
-body.addEventListener("click", (e) => {
-  console.log(e.target);
-});
+// DELETE ARTICLE //
+const btnDeleteArticle = document.querySelectorAll(".deleteArticle");
+
+if (btnDeleteArticle) {
+  btnDeleteArticle.forEach((el) => {
+    el.addEventListener("click", (e) => {
+      if (confirm("Are you sure you want to delete this article?")) {
+      } else {
+        e.preventDefault();
+      }
+    });
+  });
+}
+// END OF 'DELETE ARTICLE' //
+//=========================//
+// Beginning of

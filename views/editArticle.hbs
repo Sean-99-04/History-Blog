@@ -1,0 +1,31 @@
+<form action="/editArticle/{{article._id}}?_method=PATCH" method="POST" class="form form--edit" id="editArtForm">
+
+    <div class="form__group">
+        <label for="addAuthor" class="form__label">Author: </label>
+        <input type="text" name="author" id="editAuthor" class="form__input" value="{{article.author}}">
+    </div>
+
+    <div class="form__group">
+        <label for="addTitle" class="form__label">Title: </label>
+        <input type="text" name="title" id="editTitle" class="form__input" value="{{article.title}}">
+    </div>
+
+    <div class="form__group">
+        <label for="addContent" class="form__label form__label--align-top">Content: </label>
+        <textarea name="content" cols="30" rows="5" id="editContent" class="form__input">{{article.content}}</textarea>
+    </div>
+
+    <div class="form__group">
+        <label for="addSources" class="form__label">Sources: </label>
+        <input type="text" name="sources" id="editSources" class="form__input" value="{{article.sources}}">
+    </div>
+
+    <div class="form__group">
+        <label for="addTags" class="form__label">Tags: </label>
+        <input type="text" name="tags" id="editTags" class="form__input" value="{{article.tags}}">
+    </div>
+
+    <div class="form__group form__group--justify-center">
+        <input type="submit" value="Submit Edit" class="form__btn">
+    </div>
+</form>

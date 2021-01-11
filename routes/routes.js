@@ -32,6 +32,7 @@ router.get("/", (req, res) => {
       const newArticleObj = {
         articles: oldArticleObj.map((data) => {
           return {
+            _id: data._id,
             author: data.author,
             title: data.title,
             content: data.content,
@@ -41,47 +42,51 @@ router.get("/", (req, res) => {
           };
         }),
       };
+      // Login Verification
+      console.log(req.session.userId);
       let logged;
       if (!req.session.userId) {
         logged = false;
-        // return res.render("landing", { logged, pageTitle: "Landing" });
+        return res.render("landing", {
+          logged,
+          pageTitle: "Landing",
+          articles: newArticleObj.articles,
+        });
       } else if (req.session.userId) {
         logged = true;
-        // return res.render("landing", { logged, pageTitle: "Landing" });
+        return res.render("landing", {
+          logged,
+          pageTitle: "Landing",
+          articles: newArticleObj.articles,
+        });
       }
-      console.log(logged);
-      return res.render("landing", {
-        logged,
-        pageTitle: "Landing",
-        articles: newArticleObj.articles,
-      });
     })
     .catch((err) => console.log(err));
 });
 
-router.post("/register", (req, res) => {
-  const { name, email, password } = req.body;
-  console.log(name, email, password);
-  const user = new Users({
-    name,
-    email,
-    password,
-  });
-  user
-    .save()
-    .then((result) => {
-      console.log(result);
-      res.send(
-        `Name: ${JSON.stringify(user.name)}\nEmail: ${JSON.stringify(
-          user.email
-        )}\nPassword: ${JSON.stringify(user.password)}`
-      );
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.status(500).send("Register request failed");
-    });
-});
+// router.post("/register", (req, res) => {
+//   const { name, email, password } = req.body;
+//   console.log(name, email, password);
+//   const user = new Users({
+//     name,
+//     email,
+//     password,
+//   });
+//   user
+//     .save()
+//     .then((result) => {
+//       console.log(result);
+//       res.send(
+//         `Name: ${JSON.stringify(user.name)}\nEmail: ${JSON.stringify(
+//           user.email
+//         )}\nPassword: ${JSON.stringify(user.password)}`
+//       );
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       return res.status(500).send("Register request failed");
+//     });
+// });
 
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
@@ -147,11 +152,57 @@ router.post("/addArticle", (req, res) => {
   return res.redirect("/");
 });
 
-router.patch("/editArticle", (req, res) => {
+router.get('/editArticle/:_id"', (req, res) => {
+  return res.render("editArticle", {});
+});
+
+router.get("/editArticle/:_id", (req, res) => {
+  Article.findOne({ _id: req.params._id })
+    .exec()
+    .then((article) => {
+      const { _id, author, title, content, sources, tags, createdAt } = article;
+      const newArticle = {
+        _id,
+        author,
+        title,
+        content,
+        sources,
+        tags,
+        createdAt: formatDate(createdAt),
+      };
+      return res.render("editArticle", {
+        article: newArticle,
+        pageTitle: "Editing",
+      });
+    })
+    .catch((err) => console.log(err));
+});
+
+router.patch("/editArticle/:_id", (req, res) => {
+  const { author, title, content, sources, tags } = req.body;
+  Article.findOneAndUpdate(
+    {
+      _id: req.params._id,
+    },
+    {
+      author,
+      title,
+      content,
+      sources,
+      tags,
+    },
+    (err) => {
+      if (err) console.log(err);
+    }
+  );
+  console.log(`Updated article with id: ${req.params._id}`);
   return res.redirect("/");
 });
 
-router.delete("/deleteArticle", (req, res) => {
+router.delete("/deleteArticle/:_id", (req, res) => {
+  Article.deleteOne({ _id: req.params._id }, (err) => {
+    if (err) console.log(err);
+  });
   return res.redirect("/");
 });
 

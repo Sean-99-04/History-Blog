@@ -1,39 +1,81 @@
 {{> _addArticle}}
+{{#if logged}}
+    {{#each articles}}
+        {{> _deleteArticle}}
+        <div class="article">
+            <div class="article__left">
+                <div class="article__author">
+                    <h3 class="article__h3">posted by </h3>
+                    <p class="article__para">"{{this.author}}"</p>
+                </div>
+            </div>
+            <div class="article__right">
+                <div class="article__content">
+                    <div class="article__group article__content--title">
+                        <p class="article__para article__para--big">{{this.title}}</p>
+                    </div>
+                    <div class="article__group article__content--content">
+                        <p class="article__para article__para--big">{{this.content}}</p>
+                    </div>
+                </div>
+                <div class="article__info">
+                    <div class="article__group article__group--lower">
+                        <h3 class="article__h3">Posted on: </h3>
+                        <p class="article__para">{{this.createdAt}}</p>
+                    </div>
+                    <div class="article__group article__group--lower">
+                        <h3 class="article__h3">Sources: </h3>
+                        <p class="article__para">{{this.sources}}</p>
+                    </div>
+                    <div class="article__group article__group--lower">
+                        <h3 class="article__h3">Tags: </h3>
+                        <p class="article__para">{{this.tags}}</p>
+                    </div>
+                    <div class="article__group article__group--buttons">
+                        <a href="/editArticle/{{this._id}}" class="form__btn">Edit</a>
+                        <form action="/deleteArticle/{{this._id}}?_method=DELETE" method="POST">
+                            <button class="form__btn deleteArticle" id="{{@index}}">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+{{/if}}
 
-{{#each articles}}
-    <div class="article">
-        <div class="article__left">
-            <div class="article__author">
-                <h3 class="article__h3">posted by </h3>
-                <p class="article__para">"{{this.author}}"</p>
+{{#unless logged}}
+    {{#each articles}}
+        <div class="article">
+            <div class="article__left">
+                <div class="article__author">
+                    <h3 class="article__h3">posted by </h3>
+                    <p class="article__para">"{{this.author}}"</p>
+                </div>
+            </div>
+            <div class="article__right">
+                <div class="article__content">
+                    <div class="article__group article__content--title">
+                        <p class="article__para article__para--big">{{this.title}}</p>
+                    </div>
+                    <div class="article__group article__content--content">
+                        <p class="article__para article__para--big">{{this.content}}</p>
+                    </div>
+                </div>
+                <div class="article__info">
+                    <div class="article__group article__group--lower">
+                        <h3 class="article__h3">Posted on: </h3>
+                        <p class="article__para">{{this.createdAt}}</p>
+                    </div>
+                    <div class="article__group article__group--lower">
+                        <h3 class="article__h3">Sources: </h3>
+                        <p class="article__para">{{this.sources}}</p>
+                    </div>
+                    <div class="article__group article__group--lower">
+                        <h3 class="article__h3">Tags: </h3>
+                        <p class="article__para">{{this.tags}}</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="article__right">
-            <div class="article__content">
-                <div class="article__group article__content--title">
-                    <p class="article__para article__para--big">{{this.title}}</p>
-                </div>
-                <div class="article__group article__content--content">
-                    <p class="article__para article__para--big">{{this.content}}</p>
-                </div>
-            </div>
-            <div class="article__info">
-                <div class="article__group article__group--lower">
-                    <h3 class="article__h3">Posted on: </h3>
-                    <p class="article__para">{{this.createdAt}}</p>
-                </div>
-                <div class="article__group article__group--lower">
-                    <h3 class="article__h3">Sources: </h3>
-                    <p class="article__para">{{this.sources}}</p>
-                </div>
-                <div class="article__group article__group--lower">
-                    <h3 class="article__h3">Tags: </h3>
-                    <p class="article__para">{{this.tags}}</p>
-                </div>
-                {{#if logged}}
-                    <button id="editArticle" class="form__btn">Edit</button>
-                {{/if}}
-            </div>
-        </div>
-    </div>
-{{/each}}
+    {{/each}}
+{{/unless}}
