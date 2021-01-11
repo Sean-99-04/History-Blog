@@ -10,10 +10,11 @@ const MongoStore = require("connect-mongo")(session);
 const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 
-const { PORT, MONGODB_USER, MONGODB_PASS, MONGODB_DB } = process.env;
+const { PORT, MONGODB_URI } = process.env;
 
 // MONGODB
-const URI = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@cluster0.xuroh.mongodb.net/${MONGODB_DB}?retryWrites=true&w=majority`;
+const URI = MONGODB_URI;
+
 mongoose.connect(URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -53,6 +54,6 @@ app.use(express.static("public"));
 app.use(methodOverride("_method"));
 app.use("/", routes);
 
-app.listen(process.env.PORT || PORT, () => {
+app.listen(PORT || 3000, () => {
   console.log("listening at http://localhost:3000");
 });
