@@ -23,20 +23,10 @@
         
         {{!-- Page Title --}}
         <h2 class="m-3">HISTORY BLOG</h2>
-        {{!-- If not logged in: Add login button --}}
-        {{#unless logged}}
-            {{> _loginBtn}}
-        {{/unless}}
-        {{!-- If logged in: Add logout button --}}
-        {{#if logged}}
-            <form action="/logout" method="POST">
-                <input type="submit" value="Logout" class="form__btn form__btn--small">
-            </form>
-        {{/if}}
         <label for="menu-check-box" class="menu__label">
             <i class="fas fa-bars"></i>
         </label>
-        <input type="checkbox" id="menu-check-box">
+        <input type="checkbox" id="menu-check-box" disabled="true">
         <div class="menu">
             <label for="menu-check-box" class="menu__label">
                 <i class="fas fa-bars"></i>
@@ -44,8 +34,12 @@
         </div>
     </div>
     {{!-- END OF HEADER --}}
-
+    
+    <input type="checkbox" id="sidebar-check-box">
     <div class="sidebar">
+        <label for="sidebar-check-box" class="sidebar__label">
+            <i class="fas fa-caret-left"></i>
+        </label>
         <div class="sidebar__inner-container">
             <a href="https://github.com/Sean-99-04" target="_blank" class="sidebar__btn">
                 <i class="fab fa-github-square fa-2x"></i>
@@ -53,6 +47,7 @@
             <a href="https://t.me/myCodeHaven" target="_blank" class="sidebar__btn">
                 <i class="fab fa-telegram fa-2x"></i>
             </a>
+            <a href="#footer" class="sidebar__btn">Footer</a>
             {{#if logged}}
                 <button id="addArticle" class="sidebar__btn">+ Article</button>
             {{/if}}
@@ -62,6 +57,18 @@
     {{!-- Everything below the header --}}
     <div id="restOfBody">
         {{{body}}}
+        <div class="footer" id="footer">
+            {{!-- If not logged in: Add login button --}}
+            {{#unless logged}}
+                {{> _loginBtn}}
+            {{/unless}}
+            {{!-- If logged in: Add logout button --}}
+            {{#if logged}}
+                <form action="/logout" method="POST">
+                    <input type="submit" value="Logout" class="form__btn form__btn--small">
+                </form>
+            {{/if}}
+        </div>
     </div>
     {{!-- Unable to add more than 1 script? --}}
     {{!-- <script src="/js/article.js" type="text/javascript"></script> --}}

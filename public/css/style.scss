@@ -3,21 +3,237 @@
 // @import url("https://fonts.googleapis.com/css2?family=Xanh+Mono&display=swap");
 
 html {
+  // Layout
   box-sizing: border-box;
   overflow-x: hidden;
   scroll-behavior: smooth;
+
+  // Styling
   font-size: 20px;
+  background-color: #333;
 }
 
 *,
 ::before,
 ::after {
+  // Layout
   margin: 0;
   padding: 0;
   box-sizing: inherit;
-  color: $text-color;
-  // font-family: "Xanh Mono", monospace;
+
+  // Styling
+  // color: $text-color;
   letter-spacing: 1.5px;
+  // font-family: "Xanh Mono", monospace;
+  text-decoration: none;
+}
+
+a {
+  color: $text-color;
+}
+
+.article {
+  // Layout
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  min-width: 24rem;
+  max-width: 70%;
+  min-height: 16rem;
+  @include basic-flex();
+  position: relative;
+
+  // Styling
+  color: $text-color;
+  background-color: $background-color;
+  @include roman-border();
+  &__left {
+    // Layout
+    min-width: 10rem;
+    width: 10rem;
+    min-height: 16rem;
+
+    // Styling
+    padding: 0.5rem;
+
+    &__author {
+      // Layout
+      position: absolute;
+      width: 10rem;
+      height: 3rem;
+      top: 0;
+      left: 0;
+
+      // Styling
+      padding: 0.5rem;
+    }
+    &__profile {
+      @include full-screen-img(
+        url("../images/Gaius-Octavian-Ceasar-Augustus-2.jpg")
+      );
+
+      // Layout
+      position: absolute;
+      top: 4rem;
+      left: 0;
+
+      // Styling
+      margin-left: 1rem;
+      width: 8rem;
+      height: 8rem;
+      background-color: #fff;
+      @include roman-border();
+    }
+  }
+  &__right {
+    // Layout
+    min-width: 14rem;
+    min-height: 16rem;
+
+    &__top {
+      // Styling
+      padding: 0.5rem;
+      padding-bottom: 2rem;
+
+      &__title {
+        // Styling
+        @include basic-flex($justify: left);
+        padding: 0.5rem;
+        padding-bottom: 1rem;
+      }
+      &__content {
+        // Styling
+        padding: 0.3rem;
+      }
+    }
+    &__bottom {
+      // Styling
+      padding: 0.5rem;
+
+      &__group {
+        // border: 2px solid white;
+        @include basic-flex($justify: right);
+        // Styling
+        padding: 0.3rem;
+        &--space-around {
+          //   border: 2px solid white;
+          @include basic-flex($justify: space-around);
+          // Styling
+          padding-top: 1rem;
+          padding-left: 3rem;
+          padding-right: 3rem;
+        }
+        &__label {
+          min-width: 4rem;
+        }
+        &__content {
+          // Layout
+          min-width: 10rem;
+          width: 14rem;
+          max-width: 14rem;
+
+          // Styling
+          padding-left: 0.5rem;
+        }
+        &__btn {
+          // Layout
+          @include basic-flex();
+          width: 6rem;
+          height: 2rem;
+          // Styling
+          background-color: #333;
+          @include roman-border();
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.footer {
+  width: 100vw;
+  height: 8rem;
+  background-color: #333;
+  margin-top: 1rem;
+
+  // Styling
+  color: $text-color;
+
+  // Temporary Styling
+  @include basic-flex();
+}
+
+@media screen and (max-width: 1000px) {
+  .article {
+    // Layout
+    flex-direction: column;
+    min-width: 16rem;
+    max-width: 80vw;
+    &__left {
+      // Layout
+      min-height: 6rem;
+      max-width: 80vw;
+      &__author {
+        // Layout
+        width: 15rem;
+      }
+      &__profile {
+        // Layout
+        width: 6rem;
+        height: 6rem;
+        top: 0;
+        right: 0;
+        margin-left: auto;
+
+        // Styling
+        margin-right: 0.5rem;
+        margin-top: 0.5rem;
+      }
+    }
+    &__right {
+      // Layout
+      max-width: 80vw;
+      &__bottom {
+        &__group {
+          &--space-around {
+            padding-left: 2rem;
+            padding-right: 2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .article {
+    // Styling
+    font-size: 0.8rem;
+    &__left {
+      &__author {
+        // Layout
+        width: 10rem;
+      }
+    }
+    &__right {
+      &__top {
+        // Styling
+        padding: 0.3rem;
+        padding-bottom: 0.5rem;
+      }
+      &__bottom {
+        // Styling
+        padding: 0.5rem;
+        &__group {
+          &--space-around {
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
 }
 
 .background-img {
@@ -40,6 +256,8 @@ html {
   background-color: rgba(200, 66, 55, 0.9);
   position: fixed;
   @include basic-flex($justify: space-around);
+  // Styling
+  color: $text-color;
 }
 
 #menu-check-box {
@@ -57,29 +275,70 @@ html {
   top: 0;
   right: -12rem;
   transition: all 0.6s ease;
+
+  // Styling
+  color: $text-color;
+
   &__label {
-    position: fixed;
-    top: 1rem;
-    right: 3rem;
+    // position: fixed;
+    // top: 1rem;
+    // right: 3rem;
     font-size: 2rem;
   }
 }
 
+#sidebar-check-box {
+  display: none;
+}
+
+#sidebar-check-box:checked ~ .sidebar {
+  left: -4rem;
+  & > .sidebar__label {
+    & > i {
+      transform: rotate(180deg);
+    }
+  }
+}
+
 .sidebar {
+  // Layout
   z-index: 1;
   width: 4rem;
-  // height: 10rem;
   min-height: 2rem;
   background-color: $background-color;
   position: fixed;
   top: 50vh;
   left: 0;
   transform: translateY(-50%);
+  transition: all 0.5s ease;
 
+  // Styling
+  color: $text-color;
   border-right: 2px solid $text-color;
   border-bottom: 2px solid $text-color;
   border-top: 2px solid $text-color;
   border-radius: 0 5px 5px 0;
+  &__label {
+    // Layout
+    position: absolute;
+    top: 0.2rem;
+    right: -0.9rem;
+    width: 0.9rem;
+    height: 0.9rem;
+
+    // Styling
+    @include basic-flex();
+    background-color: $text-color;
+    border-radius: 2px;
+
+    &:hover {
+      cursor: pointer;
+    }
+    & > i {
+      transition: all 0.5s ease;
+      color: #333;
+    }
+  }
   &__inner-container {
     width: 100%;
     height: 100%;
@@ -95,6 +354,9 @@ html {
     border-bottom: 0.05rem;
     border-bottom-style: solid;
     border-bottom-color: $text-color;
+    & > i {
+      color: $text-color;
+    }
     &:first-child {
       border-radius: 0 5px 0 0;
     }
@@ -121,8 +383,11 @@ html {
 .form {
   width: 30rem;
   max-width: 80%;
+
+  // Styling
   background-color: $background_color;
   @include roman-border($width: 0.2rem);
+  color: $text-color;
   &--login {
     max-width: 20rem;
   }
@@ -187,8 +452,11 @@ html {
     background-color: #333;
     width: 8rem;
     height: 2rem;
+
+    // Styling
     font-size: 1.2rem;
     text-decoration: none;
+    color: $text-color;
     &:hover {
       cursor: pointer;
     }
@@ -196,87 +464,6 @@ html {
       font-size: 1rem;
       width: 4.5rem;
       height: 1.8rem;
-    }
-  }
-}
-
-.article {
-  z-index: -1;
-  @include roman-border($width: 0.25rem);
-  min-width: 24rem;
-  width: 40rem;
-  max-width: 70%;
-  min-height: 14.4rem;
-  max-height: 30rem;
-  background-color: $background-color;
-  margin-top: 2rem;
-  padding-bottom: 1rem;
-  position: relative;
-  @include basic-flex();
-  &:last-child {
-    margin-bottom: 2rem;
-  }
-  &__group {
-    width: 100%;
-    padding: 0.4rem;
-    &--lower {
-      @include basic-flex($justify: right);
-      padding: 0.2rem;
-    }
-    &--buttons {
-      @include basic-flex($justify: space-around);
-    }
-  }
-  &__left {
-    width: 15%;
-    max-width: 25%;
-    height: 100%;
-    padding: 0.3rem 0.8rem;
-  }
-  &__author {
-    position: absolute;
-    top: 0.2rem;
-    left: 0.4rem;
-  }
-  &__right {
-    @include basic-flex();
-    flex-direction: column;
-    min-width: 75%;
-    width: 85%;
-    height: 100%;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  &__content {
-    @include basic-flex($justify: space-between);
-    flex-direction: column;
-    width: 100%;
-    height: 66%;
-    &--title {
-      @include basic-flex($justify: start);
-      min-height: 2rem;
-    }
-    &--content {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  &__info {
-    width: 100%;
-    height: 34%;
-    padding-top: 1rem;
-  }
-  &__h3 {
-    font-size: 0.6rem;
-  }
-  &__para {
-    width: 50%;
-    font-size: 0.8rem;
-    padding: 0.2rem 0.4rem;
-    &--big {
-      font-size: 1rem;
-      width: 100%;
-      padding: 0;
     }
   }
 }

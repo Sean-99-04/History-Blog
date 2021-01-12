@@ -1,6 +1,6 @@
-// if ((process.env.NODE_ENV = "development")) {
-//   require("dotenv").config();
-// }
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config();
+}
 const express = require("express");
 const router = express.Router();
 const Users = require("./../models/users");

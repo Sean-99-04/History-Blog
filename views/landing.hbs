@@ -4,37 +4,31 @@
         {{> _deleteArticle}}
         <div class="article">
             <div class="article__left">
-                <div class="article__author">
-                    <h3 class="article__h3">posted by </h3>
-                    <p class="article__para">"{{this.author}}"</p>
-                </div>
+                <div class="article__left__author">posted by "{{this.author}}"</div>
+                <div class="article__left__profile"></div>
             </div>
             <div class="article__right">
-                <div class="article__content">
-                    <div class="article__group article__content--title">
-                        <p class="article__para article__para--big">{{this.title}}</p>
-                    </div>
-                    <div class="article__group article__content--content">
-                        <p class="article__para article__para--big">{{this.content}}</p>
-                    </div>
+                <div class="article__right__top">
+                    <div class="article__right__top__title">{{this.title}}</div>
+                    <p class="article__right__top__content">{{this.content}}</p>
                 </div>
-                <div class="article__info">
-                    <div class="article__group article__group--lower">
-                        <h3 class="article__h3">Posted on: </h3>
-                        <p class="article__para">{{this.createdAt}}</p>
+                <div class="article__right__bottom">
+                    <div class="article__right__bottom__group">
+                        <p class="article__right__bottom__group__label">posted on:</p>
+                        <p class="article__right__bottom__group__content"> {{this.createdAt}}</p>
                     </div>
-                    <div class="article__group article__group--lower">
-                        <h3 class="article__h3">Sources: </h3>
-                        <p class="article__para">{{this.sources}}</p>
+                    <div class="article__right__bottom__group">
+                        <p class="article__right__bottom__group__label">Sources:</p>
+                        <p class="article__right__bottom__group__content">{{this.sources}}</p>
                     </div>
-                    <div class="article__group article__group--lower">
-                        <h3 class="article__h3">Tags: </h3>
-                        <p class="article__para">{{this.tags}}</p>
+                    <div class="article__right__bottom__group">
+                        <p class="article__right__bottom__group__label">Tags:</p>
+                        <p class="article__right__bottom__group__content">{{this.tags}}</p>
                     </div>
-                    <div class="article__group article__group--buttons">
-                        <a href="/editArticle/{{this._id}}" class="form__btn">Edit</a>
+                    <div class="article__right__bottom__group--space-around">
+                        <a href="/editArticle/{{this._id}}" class="article__right__bottom__group__btn">Edit</a>
                         <form action="/deleteArticle/{{this._id}}?_method=DELETE" method="POST">
-                            <button class="form__btn deleteArticle" id="{{@index}}">Delete</button>
+                            <button class="article__right__bottom__group__btn deleteArticle" id="{{@index}}">Delete</button>
                         </form>
                     </div>
                 </div>
@@ -47,32 +41,26 @@
     {{#each articles}}
         <div class="article">
             <div class="article__left">
-                <div class="article__author">
-                    <h3 class="article__h3">posted by </h3>
-                    <p class="article__para">"{{this.author}}"</p>
-                </div>
+                <div class="article__left__author">posted by "{{this.author}}"</div>
+                <div class="article__left__profile"></div>
             </div>
             <div class="article__right">
-                <div class="article__content">
-                    <div class="article__group article__content--title">
-                        <p class="article__para article__para--big">{{this.title}}</p>
-                    </div>
-                    <div class="article__group article__content--content">
-                        <p class="article__para article__para--big">{{this.content}}</p>
-                    </div>
+                <div class="article__right__top">
+                    <div class="article__right__top__title">{{this.title}}</div>
+                    <p class="article__right__top__content">{{this.content}}</p>
                 </div>
-                <div class="article__info">
-                    <div class="article__group article__group--lower">
-                        <h3 class="article__h3">Posted on: </h3>
-                        <p class="article__para">{{this.createdAt}}</p>
+                <div class="article__right__bottom">
+                    <div class="article__right__bottom__group">
+                        <p class="article__right__bottom__group__label">posted on:</p>
+                        <p class="article__right__bottom__group__content"> {{this.createdAt}}</p>
                     </div>
-                    <div class="article__group article__group--lower">
-                        <h3 class="article__h3">Sources: </h3>
-                        <p class="article__para">{{this.sources}}</p>
+                    <div class="article__right__bottom__group">
+                        <p class="article__right__bottom__group__label">Sources:</p>
+                        <p class="article__right__bottom__group__content">{{this.sources}}</p>
                     </div>
-                    <div class="article__group article__group--lower">
-                        <h3 class="article__h3">Tags: </h3>
-                        <p class="article__para">{{this.tags}}</p>
+                    <div class="article__right__bottom__group">
+                        <p class="article__right__bottom__group__label">Tags:</p>
+                        <p class="article__right__bottom__group__content">{{this.tags}}</p>
                     </div>
                 </div>
             </div>
