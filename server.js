@@ -1,10 +1,7 @@
-let checkState = new Promise((resolve, reject) => {
-  if (process.env.NODE_ENV !== "production") {
-    resolve(require("dotenv").config());
-  } else {
-    reject("Could not load dotenv");
-  }
-});
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const exphbs = require("express-handlebars");
@@ -16,21 +13,15 @@ const methodOverride = require("method-override");
 
 const { PORT, MONGODB_URI, NODE_ENV } = process.env;
 
-checkState
-  .then((resolved) => {
-    // MONGODB
-    mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-    });
-    const db = mongoose.connection;
-    db.once("open", () => console.log("connected to the database"));
-    db.on("error", console.error.bind(console, "MongoDB connection error:"));
-  })
-  .catch((rejected) => {
-    console.log("There was an error: " + rejected);
-  });
+// MONGODB
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+});
+const db = mongoose.connection;
+db.once("open", () => console.log("connected to the database"));
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // HANDLEBARS
 app.engine(
